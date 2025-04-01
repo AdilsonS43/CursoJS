@@ -7,7 +7,7 @@ function capturaForm() {
     function recebeForm(evento) {
         evento.preventDefault();
 
-        const nome = formu.querySelector('.nome')
+        const nome = formu.querySelector('.nome') 
         const sobrenome = formu.querySelector('.sobrenome')
         const peso = formu.querySelector('.peso')
         const altura = formu.querySelector('.altura')
@@ -19,13 +19,10 @@ function capturaForm() {
             altura: altura.value
         })
 
-        resultado.innerHTML += `<p>${nome.value} ${sobrenome.value} tem ${peso.value}KG e mede ${altura.value}M de altura! <br></p>` 
+        resultado.innerHTML += `<p>${nome.value} ${sobrenome.value} tem ${peso.value}KG e mede ${altura.value}M de altura! <br></p>`
 
         console.log(pessoas)
     }
-
-
-
 
     formu.addEventListener('submit', recebeForm);
 }
