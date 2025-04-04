@@ -1,38 +1,63 @@
 const form = document.querySelector('.form')
 
-function capturaForm(evento) {
-    evento.preventDefault();
+form.addEventListener('submit', function (event) {
+    event.preventDefault();
 
-    const peso = parseFloat(document.querySelector('.inputPeso').value)
-    const altura = parseFloat(document.querySelector('.inputAltura').value)
-    let IMC
-    IMC = peso / (altura * altura)
-    let categoriaIMC
-    const resultado = document.querySelector('.resultado')
+    const inputPeso = event.target.querySelector('.inputPeso')
+    const inputAltura = event.target.querySelector('.inputAltura')
 
+    const peso = Number(inputPeso.value)
+    const altura = Number(inputAltura.value)
 
-    if (IMC <= 18.5) {
-        categoriaIMC = "Abaixo do peso"
-    }
-    else if (IMC >= 18.6 && IMC <= 24.9) {
-        categoriaIMC = "Peso normal"
-    }
-    else if (IMC >= 25 && IMC <= 29.9) {
-        categoriaIMC = "Sobrepeso"
-    }
-    else if (IMC >= 30 && IMC <= 34.9) {
-        categoriaIMC = "Obesidade grau 1"
-    }
-    else if (IMC >= 35 && IMC <= 39.9) {
-        categoriaIMC = "Obesidade grau 2"
-    }
-    else if (IMC > 40) {
-        categoriaIMC = "Obesidade grau 3"
+    if (!peso) {
+        setResultado('Peso inválido', false);
+        return;
     }
 
-    resultado.innerHTML = `<p> O seu IMC é ${IMC.toFixed(2)}, Categoria: ${categoriaIMC}`
+    if (!altura) {
+        setResultado('Altura inválida', false);
+        return;
+    }
 
-    console.log(IMC)
-    console.log(categoriaIMC)
+    const imc = getImc(peso, altura);
+    const categImc = getCategoria(imc);
+
+    const msg = `<p> O seu IMC é ${imc}, Categoria: (${categImc})`
+
+    setResultado(msg, true);
+
+})
+
+function getImc(peso, altura) {
+    const imc = peso / (altura * altura)
+    return imc.toFixed(2);
 }
-form.addEventListener('submit', capturaForm);
+
+function getCategoria(imc) {
+    const categ = ['Abaixo do peso', 'Peso normal', 'Sobrepeso', 'Obesidade grau 1', 'Obesidade grau 2', 'Obesidade grau 3']
+
+    if (imc >= 39.9) return categ[5];
+    if (imc >= 34.9) return categ[4];
+    if (imc >= 29.9) return categ[3];
+    if (imc >= 24.9) return categ[2];
+    if (imc >= 18.5) return categ[1];
+    if (imc < 18.5) return categ[0];
+}
+
+function createParagrafos() {
+    const p = document.createElement('p');
+    return p
+}
+
+function setResultado(msg, isvalid) {
+    const resultado = document.querySelector('.resultado')
+    resultado.innerHTML = '';
+    const p = createParagrafos();
+    if (isvalid) {
+        p.classList.add('paragrafo-resultado')
+    } else {
+        p.classList.add('bad')
+    }
+    p.innerHTML = msg;
+    resultado.appendChild(p)
+}

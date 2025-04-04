@@ -38,12 +38,6 @@ body {
   line-height: 1.0em;
 }
 
-.resultado {
-  background: #4482c9;
-  color: #fff;
-}
-
-
 form input,
 form label,
 form button {
@@ -75,4 +69,16 @@ form button {
 
 form button:hover {
   background: var(--primary-color-darker);
+}
+
+.paragrafo-resultado {
+  background: #84c99e;
+  padding: 10px 20px;
+  color: #fff;
+}
+
+.bad {
+  background: #de3535;
+  padding: 10px 20px;
+  color: #fff;
 }
